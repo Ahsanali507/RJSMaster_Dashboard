@@ -15,15 +15,34 @@ const NavButton=({title, customFunc, icon, color, dotColor})=>(
     <button type='button' onClick={customFunc} style={{color}}
        className='relative text-xl rounded-full p-3 hover:bg-light-gray'
     >
-      <span style={{background:dotColor}} className='absolute inline-flex rounded-full h-2 w-2 right-2 top-2'>
+      <span style={{background:dotColor}} 
+        className='absolute inline-flex rounded-full h-2 w-2 right-2 top-2'
+      />
         {icon}
-      </span>
     </button>
   </TooltipComponent>
 )
 
 const Navbar = () => {
-  const {activeMenu, setactiveMenu} = useStateContext();
+  const {activeMenu, setactiveMenu, isClicked, setisClicked, handleClick, screenSize, setscreenSize} = useStateContext();
+  useEffect(() => {
+    const handleResize=()=>setscreenSize(window.innerWidth);
+
+    window.addEventListener('resize',handleResize);// call handleResize every time when window width change
+
+    handleResize();
+
+    return ()=> window.removeEventListener('resize', handleResize);
+  }, [])
+
+  useEffect(() => {
+    if (screenSize<=900){
+      setactiveMenu(false)
+    }
+    else{
+      setactiveMenu(true)
+    }
+  }, [screenSize])
   return (
     <div className='flex justify-between p-2 md:mx-6 relative'>
       <NavButton 
@@ -45,14 +64,16 @@ const Navbar = () => {
 
         <NavButton 
           title="Chat" 
-          color="#03C9D7" 
+          color="blue" 
+          dotColor="#03C9D7" 
           icon={<BsChatLeft/>}
           customFunc={()=>handleClick('chat')}
         />
 
         <NavButton 
           title="Notification" 
-          color="#03C9D7" 
+          color="blue" 
+          dotColor="#03C9D7" 
           icon={<RiNotification3Line/>}
           customFunc={()=>handleClick('notification')}
         />
@@ -64,11 +85,16 @@ const Navbar = () => {
             <img src={avatar} alt="noavatar img" className='rounded-full w-8 h-8'/>
             <p>
               <span className='text-gray-400 text-14 '>Hi, </span>{' '}
-              <spa className="text-gray-400 text-14 font-bold ml-1">Ahsan</span>
+              <span className="text-gray-400 text-14 font-bold ml-1">Ahsan</span>
             </p>
             <MdKeyboardArrowDown className='text-gray-400 text-14'/>
           </div>
         </TooltipComponent>
+
+        {isClicked.cart && <Cart/>}
+        {isClicked.chat && <Chat/>}
+        {isClicked.notification && <Notification/>}
+        {isClicked.userProfile && <UserProfile/>}
       </div>
     </div>
   )
