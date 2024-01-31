@@ -57,6 +57,39 @@ const Ecommerce = () => {
                 <span><GoDotFill /></span>
                 <span>Expense</span>
               </p>
+              <p className='flex items-center gap-2 text-green-400 hover:drop-shadow-xl'>
+                <span><GoDotFill /></span>
+                <span>Budget</span>
+              </p>
+            </div>
+          </div>
+          <div className='flex flex-wrap justify-center gap-10 mt-10'>
+            <div className='pr-10 m-4 border-r-1 border-color'>
+              <div>
+                <p>
+                  <span className='text-3xl font-semibold'>$48,765</span>
+                  <span className='p-1.5 hover:drop-shadow-xl cursor-pointer rounded-full text-white bg-green-400 ml-3 text-xs'>34%</span>
+                </p>
+                <p className='mt-1 text-gray-500'>Budget</p>
+              </div>
+              <div className='mt-8'>
+                <p>
+                  <span className='text-3xl font-semibold'>$35,765</span>
+                </p>
+                <p className='mt-1 text-gray-500'>Expense</p>
+              </div>
+
+              <div className='mt-5'>
+                <SparkLine
+                   currentColor="blue"
+                   id="line-sparkline"
+                   type="Line"
+                   height="80px"
+                   width="250px"
+                   data={SparklineAreaData}
+                   color="blue"
+                />
+              </div>
             </div>
           </div>
         </div>
