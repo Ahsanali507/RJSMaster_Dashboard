@@ -2,7 +2,7 @@ import React from 'react'
 
 const Editor = () => {
   return (
-    <div>
+    <div className='flex justify-between'>
       <div>File</div>
       <div>Home</div>
       <div>Insert</div>
