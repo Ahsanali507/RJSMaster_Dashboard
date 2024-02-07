@@ -1,14 +1,16 @@
 import React from 'react'
+import { HtmlEditor, Image, Inject, Link, QuickToolbar, RichTextEditorComponent, Toolbar } from '@syncfusion/ej2-react-richtexteditor'
+import { EditorData } from '../data/dummy'
+import { Header } from '../components'
 
 const Editor = () => {
   return (
-    <div className='flex justify-between'>
-      <div>File</div>
-      <div>Home</div>
-      <div>Insert</div>
-      <div>Design</div>
-      <div>View</div>
-      <div>Layout</div>
+    <div className='p-2 m-2 mt-24 bg-white md:m-10 md:p-10 rounded-3xl'>
+      <Header category="App" title="Editor"/>
+      <RichTextEditorComponent>
+        <EditorData/>
+        <Inject services={[HtmlEditor, Toolbar, Image, Link, QuickToolbar]} />
+      </RichTextEditorComponent>
     </div>
   )
 }
