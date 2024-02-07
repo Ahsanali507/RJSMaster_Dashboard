@@ -8,7 +8,7 @@ const Calendar = () => {
     <div className='p-2 m-2 mt-24 bg-white md:m-10 md:p-10 rounded-3xl'>
       <Header category="App" title="Calendar"/>
       <ScheduleComponent
-        height="650px"
+        height="400px"
         eventSettings={{dataSource: scheduleData}}
         selectedDate={new Date(2024, 6, 3)}
       >
