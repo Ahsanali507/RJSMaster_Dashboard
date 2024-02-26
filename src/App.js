@@ -10,14 +10,14 @@ import {Ecommerce, Orders, Calendar, Employees, Customers, Stacked, Pyramid, Kan
 import {useStateContext} from './contexts/ContextProvider';
 
 const App = () => {
-  const {activeMenu, themeSettings, setThemeSettings} =useStateContext();
+  const {activeMenu, themeSettings, setThemeSettings, currentColor, currentMode} =useStateContext();
   return (
-    <div>
+    <div className={currentMode==='Dark' ? 'dark' : ''}>
       <BrowserRouter>
         <div className="relative flex dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{zindex: '1000'}}>
             <TooltipComponent content="Settings" position="Top">
-              <button type="button" className="p-3 text-3xl text-white hover:drop-shadow-xl hover:bg-light-gray" style={{background: 'blue', borderRadius: '50%'}}
+              <button type="button" className="p-3 text-3xl text-white hover:drop-shadow-xl hover:bg-light-gray" style={{background: currentColor, borderRadius: '50%'}}
                 onClick={()=>setThemeSettings(true)}
               >
                 <FiSettings/>
@@ -34,7 +34,7 @@ const App = () => {
             </div>
           )}
           <div className={
-            `dark:bg-main-bg bg-main-bg min-h-screen w-full ${activeMenu ? 'md:ml-72' : 'flex-2'
+            `dark:bg-main-dark-bg bg-main-bg min-h-screen w-full ${activeMenu ? 'md:ml-72' : 'flex-2'
             }`
           }>
             <div className="fixed w-full md:static bg-main-bg dark:bg-main-dark-bg navbar">

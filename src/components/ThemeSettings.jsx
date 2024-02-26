@@ -12,7 +12,7 @@ const ThemeSettings = () => {
 
   return (
     <div className='fixed top-0 right-0 w-screen bg-half-transparent nav-item'>
-      <div className='float-right h-screen dark:text-gray-200 bg-white dark:[#484B52] w-400'>
+      <div className='float-right h-screen dark:text-gray-200 bg-white dark:[#484B52] dark:bg-main-dark-bg w-400'>
         <div className='flex items-center justify-between p-4 ml-4'>
           <p className='text-xl font-semibold'>
             Settings
@@ -27,8 +27,8 @@ const ThemeSettings = () => {
           </p>
           <div className='mt-4'>
             <input type="radio" id='light' name='theme' value="Light" className='cursor-pointer'
-              onChange={()=>{}}
-              checked={true}
+              onChange={setMode}
+              checked={currentMode==='Light'}
             />
             <label htmlFor="light" className='ml-2 cursor-pointer text-md'>
               Light
@@ -36,8 +36,8 @@ const ThemeSettings = () => {
           </div>
           <div className='mt-4'>
             <input type="radio" id='dark' name='theme' value="Dark" className='cursor-pointer'
-              onChange={()=>{}}
-              checked={true}
+              onChange={setMode}
+              checked={currentMode==='Dark'}
             />
             <label htmlFor="dark" className='ml-2 cursor-pointer text-md'>
               Dark
@@ -54,9 +54,9 @@ const ThemeSettings = () => {
                 <div className='relative flex items-center gap-5 mt-2 cursor-pointer'>
                   <button type='button' className='w-10 h-10 rounded-full cursor-pointer' 
                     style={{backgroundColor: item.color}}
-                    onClick={()=>{}}
+                    onClick={()=>setColor(item.color)}
                   >
-                    <BsCheck className={`ml-2 text-2xl text-white ${true ? 'block' : 'hidden'}`}/>
+                    <BsCheck className={`ml-2 text-2xl text-white ${item.color===currentColor ? 'block' : 'hidden'}`}/>
                   </button>
                 </div>
               </TooltipComponent>
