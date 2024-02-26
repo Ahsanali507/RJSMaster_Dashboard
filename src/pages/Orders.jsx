@@ -14,7 +14,9 @@ const Orders = () => {
         allowSorting
       >
         <ColumnsDirective>
-          {ordersGrid.map((item, index)=><ColumnDirective key={index} {...item} />)}
+          {ordersGrid.map((item, index)=>(
+            <ColumnDirective key={index} field={item.field} headerText={item.headerText} width={item.width} editType={item.editType} textAlign={item.textAlign} />
+          ))}
         </ColumnsDirective>
         <Inject services={[Resize, Sort, ContextMenu, Filter, Page, ExcelExport, Edit, PdfExport]}/>
       </GridComponent>

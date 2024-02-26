@@ -16,7 +16,7 @@ const Customers = () => {
         width='auto'
       >
         <ColumnsDirective>
-          {customersGrid.map((item, index)=><ColumnDirective key={index} {...item} />)}
+          {customersGrid.map((item, index)=><ColumnDirective key={index} field={item.field} headerText={item.headerText} width={item.width} textAlign={item.textAlign} />)}
         </ColumnsDirective>
         <Inject services={[Page, Toolbar, Selection, Edit, Sort, Filter]}/>
       </GridComponent>
