@@ -1,96 +1,83 @@
-import * as ReactDOM from 'react-dom';
-import * as React from 'react';
-import { DialogComponent, AnimationSettingsModel, ButtonPropsModel } from '@syncfusion/ej2-react-popups';
-import { CheckBoxComponent } from '@syncfusion/ej2-react-buttons';
+import React, { useState, useEffect, useRef } from 'react';
+// import { DialogComponent, CheckBoxComponent } from '@syncfusion/ej2-react-popups';
+import { DialogComponent } from '@syncfusion/ej2-react-popups';
 import { ChangeEventArgs } from '@syncfusion/ej2-buttons';
-import { PropertyPane } from '../common/property-pane';
-import { SampleBase } from '../common/sample-base';
-import './modal-dialog.css';
+// import { PropertyPane } from '../common/property-pane';
+// import './modal-dialog.css';
 
-export class Modal extends SampleBase<{}, { hideDialog: boolean; }> {
-    private dialogInstance: DialogComponent;
-    public checkboxObj: CheckBoxComponent;
-    private animationSettings: AnimationSettingsModel;
-    private buttons: ButtonPropsModel[];
-    private buttonEle: HTMLButtonElement;
-    private buttonRef: React.Ref<HTMLButtonElement>;
-    constructor(props: {}) {
-        super(props);
-        this.state = {
-            hideDialog: true
-        };
-        this.buttonRef = element => {
-            this.buttonEle = element;
-        };
-        this.animationSettings = { effect: 'None' };
-        this.buttons = [{
-            // Click the footer buttons to hide the Dialog
+const Cart = () => {
+    let dialogInstance = useRef(null);
+    let animationSettings;
+    let buttons;
+    let buttonEle;
+    const [display, setDisplay] = useState('none');
+    const [status, setStatus] = useState(true);
+
+    animationSettings = { effect: 'None' };
+    buttons = [
+        {
             click: () => {
-                this.dialogInstance.hide();
+                setStatus(false);
             },
-            // Accessing button component properties by buttonModel property
             buttonModel: {
-                //Enables the primary button
                 isPrimary: true,
-                content: 'OK'
-            }
-        }];
-    }
+                content: 'OK',
+            },
+        },
+    ];
 
-    // function to handle the CheckBox change event
-    private onChange(args: ChangeEventArgs) {
+    const onChange = (args) => {
         if (args.checked) {
-            this.dialogInstance.overlayClick = () => {
-                this.setState({ hideDialog: false });
+            dialogInstance.current.overlayClick = () => {
+                setStatus(false);
             };
         } else {
-            this.dialogInstance.overlayClick = () => {
-                this.setState({ hideDialog: true });
+            dialogInstance.current.overlayClick = () => {
+                setStatus(true);
             };
         }
     }
-    // To Open dialog
-    private buttonClick(): void {
-        this.setState({ hideDialog: true });
+
+    const buttonClick = () => {
+        setStatus(true);
     }
 
-    private dialogClose(): void {
-        this.setState({ hideDialog: false });
-        this.buttonEle.style.display = 'inline-block';
-    }
-    private dialogOpen(): void {
-        this.buttonEle.style.display = 'none';
+    const dialogClose = () => {
+        setStatus(false);
+        setDisplay('inline-block');
     }
 
-    public render(): JSX.Element {
-        return (
-            <div className='control-pane'>
-                <div className='control-section modal-dialog-target'>
-                    <div id='target' className='col-lg-8'>
-                        <button className="e-control e-btn dlgbtn dlgbtn-position" ref={this.buttonRef} onClick={this.buttonClick.bind(this)}>Open</button>
-                        {/* Rendering modal Dialog by enabling 'isModal' as true */}
-                        <DialogComponent id="modalDialog" isModal={true} buttons={this.buttons} header='Software Update' width='335px' content='Your current software version is up to date.'
-                            ref={dialog => this.dialogInstance = dialog}
-                            target='#target' visible={this.state.hideDialog} open={this.dialogOpen.bind(this)} close={this.dialogClose.bind(this)} animationSettings={this.animationSettings}></DialogComponent>
-                    </div>
-                    <div className='col-lg-4 property-section'>
-                        <PropertyPane title='Properties'>
-                            <table id='property' title='Properties' className='property-panel-table table-width'>
-                                <tbody>
-                                    <tr>
-                                        <td className='table-td'>
-                                            <div className='dialog-td-font'>Close on overlay click</div>
-                                        </td>
-                                        <td>
-                                            <CheckBoxComponent checked={false} ref={(scope) => { this.checkboxObj = scope; }} change={this.onChange.bind(this)} ></CheckBoxComponent>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </PropertyPane>
-                    </div>
+    const dialogOpen = () => {
+        setStatus(true);
+        setDisplay('none');
+    }
+
+    return (
+        <div className="control-pane">
+            <div className="control-section modal-dialog-target">
+                <div id="target" className="col-lg-8">
+                    <button className="e-control e-btn dlgbtn dlgbtn-position" ref={(element) => buttonEle = element} onClick={buttonClick} style={{ display: display }}>Open</button>
+                    <DialogComponent id="modalDialog" isModal={true} buttons={buttons} header="Software Update" width="335px" content="Your current software version is up to date." ref={dialogInstance} target="#target" visible={status} open={dialogOpen} close={dialogClose} animationSettings={animationSettings}></DialogComponent>
+                </div>
+                <div className="col-lg-4 property-section">
+                    {/* <PropertyPane title="Properties"> */}
+                        <table id="property" title="Properties" className="property-panel-table table-width">
+                            <tbody>
+                                <tr>
+                                    <td className="table-td">
+                                        <div className="dialog-td-font">Close on overlay click</div>
+                                    </td>
+                                    {/* <td>
+                                        <CheckBoxComponent checked={false} change={onChange}></CheckBoxComponent>
+                                    </td> */}
+                                </tr>
+                            </tbody>
+                        </table>
+                    {/* </PropertyPane> */}
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
+
+export default Cart;
