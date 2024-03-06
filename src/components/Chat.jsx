@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 const Chat = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [messages, setMessages] = useState([
-    // Initialize with some example messages or an empty array as you want for start
+    // Initialize with some example messages or an empty array as you want for start and then later on we will set it to states
   ]);
 
   const messagesRef = useRef(null);
