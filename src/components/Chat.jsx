@@ -9,7 +9,6 @@ const Chat = () => {
   const messagesRef = useRef(null);
 
   useEffect(() => {
-    // Scroll to the bottom of the messages div when component mounts and component
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
   }, [messages]);
 
